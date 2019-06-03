@@ -1,12 +1,17 @@
+
 <template>
-  <div class="pchelp">
-    <h1>Помощь по компьютерам</h1>
-    
-  </div>
+  <Services/>
 </template>
 
 <script>
-export default {
+import Services from "@/components/Services";
 
+export default {
+  components: { Services },
+  data() {
+    return {
+      //
+    };
   }
+};
 </script>
