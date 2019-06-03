@@ -1,6 +1,7 @@
 <template>
   <nav>
     <v-toolbar flat app>
+      <v-toolbar-side-icon class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">Моё</span>
         <span>Приложение</span>
@@ -10,15 +11,23 @@
       
       <v-btn flat color="grey">
         <span>Выйти</span>
-        <v-icon>exit_to_app</v-icon>
+        <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar>
+    <v-navigation-drawer v-model="drawer" app class="primary">
+     
+    </v-navigation-drawer>
   </nav>
 </template>
 
 
 <script>
 export default {
+  data() {
+    return {
+      drawer: false
+    } 
+  }
     
 }
 </script>
