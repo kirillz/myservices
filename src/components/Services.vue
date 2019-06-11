@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="pchelp">
     <p class="subheading grey--text centered pt-5">
@@ -34,7 +35,7 @@
                 <v-divider></v-divider>
 
                 <v-card>
-                  <v-layout row v-for="service in services" :key="service.title">
+                  <v-layout row v-for="service of services" :key="service.title">
                     <v-card width="100%" class="ma-3">
                       <v-flex xs12 md12>
                         <v-card-title class="primary white--text">
@@ -69,12 +70,21 @@
                 </v-card>
               </v-card>
             </v-flex>
-            <v-card width="30%" height="200px" class="ma-4">
+            <v-card width="30%" height="auto" class="ma-4">
               <v-container>
                 <v-card class="primary white--text">
                   <v-card-text>Отметьте нужное галочками или Вы можете позвонить мне по телефону, я расскажу подробнее.</v-card-text>
                   <v-card-title v-if="quantSum > 0">
-                    Вами отмечены:
+                    <h4 class="mx-2">
+                      <ul>
+                        <li
+                          transition="fade-transition"
+                          v-if="service.checked"
+                          v-for="service in services"
+                          :key="index"
+                        >{{service.title}}</li>
+                      </ul>
+                    </h4>Вами отмечены:
                     <v-spacer></v-spacer>
                     <v-chip class="subheading" color="green" text-color="white">
                       <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
