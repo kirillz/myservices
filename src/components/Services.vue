@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="pchelp">
     <p class="subheading grey--text centered pt-5">
@@ -34,7 +35,7 @@
                 <v-divider></v-divider>
 
                 <v-card>
-                  <v-layout row v-for="service in services" :key="service.title">
+                  <v-layout row v-for="service of services" :key="service.title">
                     <v-card width="100%" class="ma-3">
                       <v-flex xs12 md12>
                         <v-card-title class="primary white--text">
@@ -69,12 +70,16 @@
                 </v-card>
               </v-card>
             </v-flex>
-            <v-card width="30%" height="200px" class="ma-4">
+            <v-card width="30%" height="auto" class="ma-4">
               <v-container>
                 <v-card class="primary white--text">
                   <v-card-text>Отметьте нужное галочками или Вы можете позвонить мне по телефону, я расскажу подробнее.</v-card-text>
                   <v-card-title v-if="quantSum > 0">
-                    Вами отмечены:
+                    <h4 class="mx-2">
+                      <ul>
+                        <li v-for="n in selectedServices" :key="n">{{ n.title }}</li>
+                      </ul>
+                    </h4>Вами отмечены:
                     <v-spacer></v-spacer>
                     <v-chip class="subheading" color="green" text-color="white">
                       <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
@@ -137,8 +142,11 @@ export default {
     };
   },
   computed: {
+    selectedServices() {
+      return this.services.filter(n => n.checked);
+    },
     costSum() {
-      return this.services.reduce((acc, n) => acc + n.cost * n.checked, 0);
+      return this.services.reduce((acc, n) => acc + n.cost, 0);
     },
     quantSum() {
       return this.services.reduce((acc, n) => acc + n.checked, 0);
