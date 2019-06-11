@@ -77,12 +77,16 @@
                   <v-card-title v-if="quantSum > 0">
                     <h4 class="mx-2">
                       <ul>
+<<<<<<< HEAD
                         <li
                           transition="fade-transition"
                           v-if="service.checked"
                           v-for="service in services"
                           :key="index"
                         >{{service.title}}</li>
+=======
+                        <li v-for="n in selectedServices" :key="n">{{ n.title }}</li>
+>>>>>>> 0.0.1
                       </ul>
                     </h4>Вами отмечены:
                     <v-spacer></v-spacer>
@@ -147,8 +151,11 @@ export default {
     };
   },
   computed: {
+    selectedServices() {
+      return this.services.filter(n => n.checked);
+    },
     costSum() {
-      return this.services.reduce((acc, n) => acc + n.cost * n.checked, 0);
+      return this.services.reduce((acc, n) => acc + n.cost, 0);
     },
     quantSum() {
       return this.services.reduce((acc, n) => acc + n.checked, 0);
