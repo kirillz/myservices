@@ -26,16 +26,20 @@
                 <v-toolbar card prominent>
                   <v-toolbar-title class="body-2 grey--text">Выберите раздел</v-toolbar-title>
 
-                  <v-btn outline color="indigo">Общая помощь</v-btn>
-                  <v-btn outline color="indigo">Оборудование</v-btn>
-                  <v-btn outline color="indigo">Система</v-btn>
+                  <v-btn
+                    v-for="(n, i) in categories"
+                    :key="n"
+                    @click="active = i"
+                    :color="i === active ? 'red' : 'indigo'"
+                    outline
+                  >{{ n.title }}</v-btn>
                   <v-spacer></v-spacer>
                 </v-toolbar>
 
                 <v-divider></v-divider>
 
                 <v-card>
-                  <v-layout row v-for="service of services" :key="service.title">
+                  <v-layout row v-for="service in category.items" :key="service.title">
                     <v-card width="100%" class="ma-3">
                       <v-flex xs12 md12>
                         <v-card-title class="primary white--text">
@@ -77,18 +81,10 @@
                   <v-card-title v-if="quantSum > 0">
                     <h4 class="mx-2">
                       <ul>
-<<<<<<< HEAD
-                        <li
-                          transition="fade-transition"
-                          v-if="service.checked"
-                          v-for="service in services"
-                          :key="index"
-                        >{{service.title}}</li>
-=======
                         <li v-for="n in selectedServices" :key="n">{{ n.title }}</li>
->>>>>>> 0.0.1
                       </ul>
-                    </h4>Вами отмечены:
+                    </h4>
+                    <h4 class="mt-3">Вами выбраны:</h4>
                     <v-spacer></v-spacer>
                     <v-chip class="subheading" color="green" text-color="white">
                       <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
@@ -110,55 +106,125 @@ export default {
   data() {
     return {
       quant: 0,
-      services: [
+      active: 0,
+      categories: [
         {
-          title: "Освобождение рабочей области жёсткого диска",
-          description: "Подробное описание услуги 1",
-          cost: 790,
-          checked: false
+          name: "services",
+          title: "Общая помощь",
+          items: [
+            {
+              title: "Освобождение рабочей области жёсткого диска",
+              description: "Подробное описание услуги 1",
+              cost: 790,
+              checked: false
+            },
+            {
+              title: "Сохранение, перенос информации (за 1 Гб включительно)",
+              description: "Подробное описание услуги 2",
+              cost: 340,
+              checked: false
+            },
+            {
+              title: "Деление жесткого диска на разделы (за 1 раздел)",
+              description: "Подробное описание услуги 3",
+              cost: 550,
+              checked: false
+            },
+            {
+              title: "Форматирование жесткого диска (за 1 раздел)",
+              description: "Подробное описание услуги",
+              cost: 240,
+              checked: false
+            },
+            {
+              title: "Восстановление данных (случайно удаленные файлы и др.)",
+              description: "Подробное описание услуги",
+              cost: 750,
+              checked: false
+            },
+            {
+              title: "Дефрагментация жесткого диска",
+              description: "Подробное описание услуги",
+              cost: 50,
+              checked: false
+            }
+          ]
         },
         {
-          title: "Сохранение, перенос информации (за 1 Гб включительно)",
-          description: "Подробное описание услуги 2",
-          cost: 340,
-          checked: false
+          name: "equip",
+          title: "Оборудование",
+          items: [
+            {
+              title: "Проведение работ по модернизации компьютера",
+              description: "Подробное описание услуги 1",
+              cost: 500,
+              checked: false
+            }
+          ]
         },
         {
-          title: "Деление жесткого диска на разделы (за 1 раздел)",
-          description: "Подробное описание услуги 3",
-          cost: 550,
-          checked: false
-        },
-        {
-          title: "Форматирование жесткого диска (за 1 раздел)",
-          description: "Подробное описание услуги",
-          cost: 240,
-          checked: false
-        },
-        {
-          title: "Восстановление данных (случайно удаленные файлы и др.)",
-          description: "Подробное описание услуги",
-          cost: 750,
-          checked: false
-        },
-        {
-          title: "Дефрагментация жесткого диска",
-          description: "Подробное описание услуги",
-          cost: 50,
-          checked: false
+          name: "system",
+          title: "Система",
+          items: [
+            {
+              title: 'Поиск "плавающей" системной или аппаратной ошибки',
+              description: "Подробное описание услуги 1",
+              cost: 750,
+              checked: false
+            },
+            {
+              title: "Ускорение загрузки Windows",
+              description: "Подробное описание услуги 1",
+              cost: 700,
+              checked: false
+            },
+            {
+              title: "Комплексная настройка Windows",
+              description: "Подробное описание услуги 1",
+              cost: 1500,
+              checked: false
+            },
+            {
+              title: "Устранение ошибок в системном реестре Windows",
+              description: "Подробное описание услуги 1",
+              cost: 1500,
+              checked: false
+            },
+            {
+              title: "Восстановление запуска операционной системы после сбоя",
+              description: "Подробное описание услуги 1",
+              cost: 1100,
+              checked: false
+            },
+            {
+              title: "Настройка и оптимизация системных служб",
+              description: "Подробное описание услуги 1",
+              cost: 790,
+              checked: false
+            }
+          ]
         }
       ]
     };
   },
   computed: {
+    category() {
+      return this.categories[this.active];
+    },
     selectedServices() {
-      return this.services.filter(n => n.checked);
+      return this.category.items.filter(n => n.checked);
     },
     costSum() {
-      return this.services.reduce((acc, n) => acc + n.cost, 0);
+      return this.category.items.reduce(
+        (acc, n) => acc + n.checked * n.cost,
+        0
+      );
     },
     quantSum() {
-      return this.services.reduce((acc, n) => acc + n.checked, 0);
+      return this.category.items.reduce((acc, n) => acc + n.checked, 0);
+    },
+    itogo() {
+      return this.quantSum * this.costSum;
     }
   }
 };
