@@ -3,8 +3,9 @@
     <v-toolbar flat app>
       <v-toolbar-side-icon class="grey--text" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
-        <span class="font-weight-light">Моё</span>
-        <span>Приложение</span>
+        <span class="font-weight-light">Revive-</span>
+        <span>IT</span>
+        <h6 class="font-weight-light">ваш помощник с ПК</h6>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
