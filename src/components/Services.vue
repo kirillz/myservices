@@ -23,7 +23,7 @@
             <v-flex xs8 offset-xs1>
               <v-card class="card--flex-toolbar">
                 <v-toolbar card prominent>
-                  <v-toolbar-title class="body-2 grey--text">Выберите раздел и</v-toolbar-title>
+                  <v-toolbar-title class="body-2 grey--text">Выберите раздел</v-toolbar-title>
 
                   <v-btn
                     v-for="(n, i) in categories"
@@ -35,17 +35,17 @@
                 </v-toolbar>
 
                 <v-divider></v-divider>
-                <v-flex column>
-                  <v-toolbar card prominent>
-                    <v-btn
-                      v-for="(n, i) in category.sections"
-                      :key="n.name"
-                      @click="activeSubcategory = i"
-                      :color="i === activeSubcategory ? 'red' : 'indigo'"
-                      outline
-                    >{{ n.title }}</v-btn>
-                  </v-toolbar>
-                </v-flex>
+                <v-toolbar-title class="body-2 grey--text">Тип работ</v-toolbar-title>
+                <v-divider></v-divider>
+                <v-toolbar card prominent>
+                  <v-btn
+                    v-for="(n, i) in category.sections"
+                    :key="n.name"
+                    @click="activeSubcategory = i"
+                    :color="i === activeSubcategory ? 'red' : 'indigo'"
+                    outline
+                  >{{ n.title }}</v-btn>
+                </v-toolbar>
 
                 <v-card>
                   <v-layout row v-for="service in section.items" :key="service.title">
@@ -83,23 +83,29 @@
                 </v-card>
               </v-card>
             </v-flex>
-            <v-card width="30%" height="auto" class="ma-4">
+            <v-card width="40%" height="auto" class="ma-1">
               <v-container>
                 <v-card class="primary white--text">
-                  <v-card-text>Отметьте нужное галочками или Вы можете позвонить мне по телефону, я расскажу подробнее.</v-card-text>
-                  <v-card-title v-if="quantSum > 0">
+                  <v-card-text>Отметьте нужное. Вы также можете позвонить мне по телефону, я расскажу подробнее.</v-card-text>
+                  <v-card-text v-if="quantSum > 0">
                     <h4 class="mx-2">
-                      <ul>
-                        <li v-for="n in selectedServices" :key="n">{{ n.title }}</li>
-                      </ul>
+                      Вами выбраны:
+                      <v-divider class="my-3 success"></v-divider>
+                      <ol class="srvlist">
+                        <li v-for="n in selectedServices" :key="n">
+                          <v-icon class="srvicon">mdi-check-all</v-icon>
+                          {{ n.title }}
+                        </li>
+                      </ol>
+                      <v-divider class="my-3 success"></v-divider>
                     </h4>
-                    <h4 class="mt-3">Вами выбраны:</h4>
-                    <v-spacer></v-spacer>
-                    <v-chip class="subheading" color="green" text-color="white">
+
+                    <v-chip class="subheading mt-1 ml-5" color="green" text-color="white">
                       <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
                       Сумма: {{costSum}} р.
                     </v-chip>
-                  </v-card-title>
+                    <OrderForm/>
+                  </v-card-text>
                 </v-card>
               </v-container>
             </v-card>
@@ -111,7 +117,9 @@
 </template>
 
 <script>
+import OrderForm from "@/components/OrderForm";
 export default {
+  components: { OrderForm },
   data() {
     return {
       quant: 0,
@@ -564,5 +572,15 @@ export default {
 
 .v-label
   font-size: 36px
+
+.srvicon
+  font-size: 1.5rem
+  margin-left: -25px
+  color: yellow
+  transition: all 3s ease-in
+
+
+.srvlist
+  list-style: none
 
 </style>

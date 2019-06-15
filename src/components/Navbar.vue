@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-toolbar flat app>
-      <v-toolbar-side-icon class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="grey--text" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">Моё</span>
         <span>Приложение</span>
@@ -14,7 +14,7 @@
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-navigation-drawer app v-model="drawer" class="primary">
+    <v-navigation-drawer app v-model="drawer" class="primary" temporary>
       <v-list>
         <v-list-tile v-for="link in links" :key="link.text" router :to="link.route">
           <v-list-tile-action>
@@ -26,41 +26,38 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-
   </nav>
 </template>
 
 
 <script>
-  export default {
-    data() {
-      return {
-        drawer: false,
-        links: [
-          {
-            icon: 'dashboard',
-            text: 'На главную',
-            route: '/'
-          },
-          {
-            icon: 'mdi-account-tie',
-            text: 'Обо мне',
-            route: '/about'
-          },
-          {
-            icon: 'mdi-desktop-classic',
-            text: 'Помощь с компьютером',
-            route: '/pchelp'
-          },
-          {
-            icon: 'mdi-web',
-            text: 'Создание сайтов',
-            route: '/sites'
-          }
-
-        ]
-      }
-    }
-
+export default {
+  data() {
+    return {
+      drawer: null,
+      links: [
+        {
+          icon: "dashboard",
+          text: "На главную",
+          route: "/"
+        },
+        {
+          icon: "mdi-account-tie",
+          text: "Обо мне",
+          route: "/about"
+        },
+        {
+          icon: "mdi-desktop-classic",
+          text: "Помощь с компьютером",
+          route: "/pchelp"
+        },
+        {
+          icon: "mdi-web",
+          text: "Создание сайтов",
+          route: "/sites"
+        }
+      ]
+    };
   }
+};
 </script>
