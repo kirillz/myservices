@@ -20,7 +20,7 @@
           </v-toolbar>
 
           <v-layout row pb-3>
-            <v-flex xs8 offset-xs1>
+            <v-flex xs10 offset-xs1>
               <v-card class="card--flex-toolbar">
                 <v-toolbar card prominent>
                   <v-toolbar-title class="body-2 grey--text">Выберите раздел</v-toolbar-title>
@@ -37,14 +37,16 @@
                 <v-divider></v-divider>
                 <v-toolbar-title class="body-2 grey--text">Тип работ</v-toolbar-title>
                 <v-divider></v-divider>
-                <v-toolbar card prominent>
-                  <v-btn
-                    v-for="(n, i) in category.sections"
-                    :key="n.name"
-                    @click="activeSubcategory = i"
-                    :color="i === activeSubcategory ? 'red' : 'indigo'"
-                    outline
-                  >{{ n.title }}</v-btn>
+                <v-toolbar card extended prominent style="height: auto;">
+                  <v-layout align-start justify-start row mt-5 wrap fill-height>
+                    <v-btn
+                      v-for="(n, i) in category.sections"
+                      :key="n.name"
+                      @click="activeSubcategory = i"
+                      :color="i === activeSubcategory ? 'red' : 'indigo'"
+                      outline
+                    >{{ n.title }}</v-btn>
+                  </v-layout>
                 </v-toolbar>
 
                 <v-card>
@@ -99,12 +101,13 @@
                       </ol>
                       <v-divider class="my-3 success"></v-divider>
                     </h4>
-
-                    <v-chip class="subheading mt-1 ml-5" color="green" text-color="white">
-                      <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
-                      Сумма: {{costSum}} р.
-                    </v-chip>
-                    <OrderForm/>
+                    <v-card-title>
+                      <v-chip class="mt-1 ml-4" color="green" text-color="white">
+                        <v-avatar class="yellow black--text">{{quantSum}}</v-avatar>
+                        Сумма: {{costSum}} р.
+                        <OrderForm/>
+                      </v-chip>
+                    </v-card-title>
                   </v-card-text>
                 </v-card>
               </v-container>
